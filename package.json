@@ -16,5 +16,10 @@
   "bugs": {
     "url": "https://github.com/AF-cmdZ/README_generator/issues"
   },
-  "homepage": "https://github.com/AF-cmdZ/README_generator#readme"
+  "homepage": "https://github.com/AF-cmdZ/README_generator#readme",
+  "dependencies": {
+    "axios": "^0.21.1",
+    "inquirer": "^8.1.1",
+    "util": "^0.12.4"
+  }
 }
