@@ -2,26 +2,38 @@
 const fs = require('fs'); 
 const util = require('util');
 const inquirer = require('inquirer');
-const generateReadme = require("./utils/generateReadme");
-const writeFileAsync = util.promisify(fs.writeFile);
 
-// prompt questions to create the README.md document 
-function promptQuestions() {
-    return inquirer.prompt([
+// Internal Modules
+const api = require("./utils/api.js");
+const generateMarkdown = require('./utils/generateMarkdown.js');
+
+// Inquirer prompts for userResponses
+const questions = [
+
+        {
+            type: "input",
+            name: "username",
+            message: "Enter your GitHub username here: ",
+        },
+        {
+            type: "input",
+            name: "repo",
+            message: "What is the name of your GitHub repo?",
+        },
         {
             type: "input",
             name: "projectName",
-            message: "What is the project name?",
+            message: "What is this project name?",
         },
         {
             type: "input",
             name: "description",
-            message: "Write a description for your project:",
+            message: "Write a description for this project: ",
         },
         {
             type: "input",
             name: "installation",
-            message: "Describe the installation process for running this generator:",
+            message: "Describe the installation process for running this generator: ",
         },
         {
             type: "input",
@@ -57,31 +69,37 @@ function promptQuestions() {
             name: "questions",
             message: "What if there are questions about this project?",
         },
-        {
-            type: "input",
-            name: "username",
-            message: "Enter your GitHub username here: ",
-        },
-        {
-            type: "input",
-            name: "email",
-            message: "Enter your email address here: ",
-        },
-    ])
+        
+    ];
+
+// Write file notification
+function writeToFile(fileName, data) {
+    fs.writeFile(fileName, data, err => {
+        if(err) {
+            return console.log(err);
+    }   
+    console.log("Success! Your README.md file has been generated.");
+});
 }
 
-// Async function using util.promisify
+const writeFileAsync = util.promisify(writeToFile);
+
+
+// Main Function
 async function init() {
     try {
-        // prompt questions and create answers for README
-        const answers = await promptQuestions();
-        const generateContent = generateReadme(answers);
-        // write the new README.md file to the dist folder
-        await writeFileAsync('./dist/README.md', generateContent);
-        console.log("success!");
+
+        // Prompt Inquirer Questions 
+        const userResponses = await inquirer.prompt(questions);
+        // call github API for user info
+        const userInfo = await api.getUser(userResponses);
+        // pass inquirer userResponses to generate markdown 
+        const markdown = generateMarkdown(userResponses, userInfo);
+        // write markdown to file
+        await writeFileAsync("testREADME.md", markdown);  
     }   catch(err) {
         console.log(err);
     }
-}
+};
 
 init();
