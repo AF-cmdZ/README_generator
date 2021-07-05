@@ -18,6 +18,36 @@ function promptQuestions() {
             name: "description",
             message: "Write a description for your project:",
         },
+        {
+            type: "input",
+            name: "installation",
+            message: "Describe the installation process for running this generator:",
+        },
+        {
+            type: "input",
+            name: "usage",
+            message: "What is the project usage?",
+        },
+        {   
+            type: "list",
+            name: "license",
+            message: "Choose the appropriate license for this project: ",
+            choices: [
+                "Apache",
+                "Academic",
+                "GNU",
+                "ISC",
+                "MIT",
+                "Mozilla",
+                "Open",
+            ]
+        },
+        {
+            type: "input",
+            name: "contributing",
+            message: "Who are the contributors of this project?",
+        },
         
+
     ])
 }
