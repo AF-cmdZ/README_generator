@@ -46,12 +46,53 @@ function generateMarkdown(userResponses, userInfo) {
     if (userResponses.usage !== '') {
         draftMarkdown +=
         `
-        ##Usage
+        ## Usage
         *Instructions for use:*
         ${userResponses.usage}
         `
     };
 
     // Contributors Section
-    
+    if (userResponses.contributing !== '') {
+        `
+        ## Contributors
+        ${userResponses.contributing}
+        `
+    };
+
+    // Tests Section
+    if (userResponses.tests !== '') {
+        `
+        ## Tests
+        *The following tests are available for this project:*
+        ${userResponses.tests}
+        `
+    };
+
+    // Licensing Section
+    draftMarkdown += 
+    `
+        ## License
+        ${userResponses.license}
+    `;
+
+    // Questions Section
+    let draftDev =
+    `
+    ### Questions?
+    ![Developer Profile Pic]${userInfo.avatar_url})
+
+    For any questions, please contact me with the information below:
+
+    GitHub: [@${userInfo.login}](${userInfo.url})
+    `;
+
+    // Add the Developer Section to markdown
+    draftMarkdown += draftDev;
+
+    // Return markdown
+    return draftMarkdown;
+
 }
+
+Module.exports = generateMarkdown;
