@@ -69,3 +69,19 @@ function promptQuestions() {
         },
     ])
 }
+
+// Async function using util.promisify
+async function init() {
+    try {
+        // prompt questions and create answers for README
+        const answers = await promptQuestions();
+        const generateContent = generateReadme(answers);
+        // write the new README.md file to the dist folder
+        await writeFileAsync('./dist/README.md', generateContent);
+        console.log("success!");
+    }   catch(err) {
+        console.log(err);
+    }
+}
+
+init();
