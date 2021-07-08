@@ -1,98 +1,98 @@
 function generateMarkdown(userResponses, userInfo) {
-    // Generate the TOC based on userResponses
-    let draftTOC = `## Table of Contents`;
+// Generate the TOC based on userResponses
+let draftTOC = `## Table of Contents`;
 
-    if (userResponses.installation !== '') { draftTOC += `
-    * [Installation](#installation)` };
-    
-    if (userResponses.usage !== '') { draftTOC += `
-    * [Usage](#usage)` };
+if (userResponses.installation !== '') { draftTOC += `
+* [Installation](#installation)` };
 
-    if (userResponses.contributing !== '') { draftTOC += `
-    * [Contributing](#contributing)` };
+if (userResponses.usage !== '') { draftTOC += `
+* [Usage](#usage)` };
 
-    if (userResponses.tests !== '') { draftTOC += `
-    * [Tests](#tests)` };
+if (userResponses.contributing !== '') { draftTOC += `
+* [Contributing](#contributing)` };
 
-    // Generate markdown for HUD of README.md
-    let draftMarkdown = 
-    `# ${userResponses.title}
+if (userResponses.tests !== '') { draftTOC += `
+* [Tests](#tests)` };
 
-    ![Badge for Github repo HUD](https://img.shields.io/github/languages/top/${userResponses.username}/${userResponses.repo}?style=flat&logo=appveyor) ![Badge for GitHub last commit](https://img.shields.io/github/last-commit/${userResponses.username}/${userResponses.repo}?style=flat&logo=appveyor)
+// Generate markdown for HUD of README.md
+let draftMarkdown = 
+`# ${userResponses.title}
 
-    ## Description
-    ${userResponses.description}
-    `
+![Badge for Github repo HUD](https://img.shields.io/github/languages/top/${userResponses.username}/${userResponses.repo}?style=flat&logo=appveyor) ![Badge for GitHub last commit](https://img.shields.io/github/last-commit/${userResponses.username}/${userResponses.repo}?style=flat&logo=appveyor)
 
-    // Add TOC to markdown
-    draftMarkdown += draftTOC;
+## Description
+${userResponses.description}\n`
 
-    // Add license section
-    draftMarkdown += `
-    * [License](#license)`;
 
-    // Installation section
-    if (userResponses.installation !== '') {
-        draftMarkdown +=
-        `
-        ## Installation
+// Add TOC to markdown
+draftMarkdown += draftTOC;
 
-        *Steps required to install this project and get the application running:*
+// Add license section
+draftMarkdown += `
+* [License](#license)`;
 
-        ${userResponses.installation}`
-    };
+// Installation section
+if (userResponses.installation !== '') {
+draftMarkdown +=
+`
+## Installation
 
-    // Usage Section
-    if (userResponses.usage !== '') {
-        draftMarkdown +=
-        `
-        ## Usage
-        *Instructions for use:*
-        ${userResponses.usage}
-        `
-    };
+*Steps required to install this project and get the application running:*
 
-    // Contributors Section
-    if (userResponses.contributing !== '') {
-        `
-        ## Contributors
-        ${userResponses.contributing}
-        `
-    };
+${userResponses.installation}\n`
+};
 
-    // Tests Section
-    if (userResponses.tests !== '') {
-        `
-        ## Tests
-        *The following tests are available for this project:*
-        ${userResponses.tests}
-        `
-    };
+// Usage Section
+if (userResponses.usage !== '') {
+draftMarkdown +=
 
-    // Licensing Section
-    draftMarkdown += 
-    `
-        ## License
-        ${userResponses.license}
-    `;
+` ## Usage
+*Instructions for use:*
+${userResponses.usage}
+`
+};
 
-    // Questions Section
-    let draftDev =
-    `
-    ### Questions?
-    ![Developer Profile Pic]${userInfo.avatar_url})
+// Contributors Section
+if (userResponses.contributing !== '') {
+`
+## Contributors
+${userResponses.contributing}
+`
+};
 
-    For any questions, please contact me with the information below:
+// Tests Section
+if (userResponses.tests !== '') {
+draftMarkdown +=
+`
+## Tests
+*The following tests are available for this project:*
+${userResponses.tests}
+`
+};
 
-    GitHub: [@${userInfo.login}](${userInfo.url})
-    `;
+// Licensing Section
+draftMarkdown += 
+`
+## License
+${userResponses.license}
+`;
 
-    // Add the Developer Section to markdown
-    draftMarkdown += draftDev;
+// Questions Section
+let draftDev =
+`
+### Questions?
+![Developer Profile Pic](${userInfo.avatar_url})
 
-    // Return markdown
-    return draftMarkdown;
+For any questions, please contact me with the information below:
 
-}
+GitHub: [@${userInfo.login}](${userInfo.url})
+`;
 
-Module.exports = generateMarkdown;
+// Add the Developer Section to markdown
+draftMarkdown += draftDev;
+
+// Return markdown
+return draftMarkdown;
+};
+
+module.exports = generateMarkdown;
